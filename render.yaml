@@ -1,0 +1,86 @@
+# Render.com blueprint — ExpenseHub V1 (AccountEdge Pilot)
+#
+# Two services:
+#   1. expensehub-v1-web    — Next.js admin app (Free tier OK for testing; sleeps after 15min of inactivity)
+#   2. expensehub-v1-worker — Node background worker (Starter $7/mo; Render disallows Free workers)
+#
+# To deploy:
+#   1. Push this file to the main branch of chcpaint/expensehub-v1 (already done by Claude).
+#   2. In Render: New + → Blueprint → connect github.com/chcpaint/expensehub-v1.
+#   3. Render reads this file and proposes the two services.
+#   4. Paste the secrets marked `sync: false` from Supabase:
+#        - SUPABASE_SERVICE_ROLE_KEY (Supabase dashboard → Settings → API → service_role)
+#        - SUPABASE_DB_URL (Supabase dashboard → Settings → Database → Connection string → URI mode)
+#   5. Click Apply. First deploy takes 5–8 minutes.
+
+services:
+  # --------------------------------------------------------------------------
+  # WEB — Next.js admin console
+  # --------------------------------------------------------------------------
+  - type: web
+    name: expensehub-v1-web
+    runtime: node
+    plan: free
+    region: oregon
+    branch: main
+    rootDir: .
+    buildCommand: npm install && npm run render:build:web
+    startCommand: npm run start:web
+    healthCheckPath: /login
+    autoDeploy: true
+    envVars:
+      - key: NODE_VERSION
+        value: 20.11.0
+      - key: NPM_CONFIG_PRODUCTION
+        value: "false"          # need devDeps (typescript) for build
+      - key: NEXT_PUBLIC_SUPABASE_URL
+        value: https://uhyfpvhrrkkqbppxfpdr.supabase.co
+      - key: NEXT_PUBLIC_SUPABASE_ANON_KEY
+        value: sb_publishable_2AYCvf_Grb3xtw9D7Cumcg_YQFKKt8u
+      - key: SUPABASE_URL
+        value: https://uhyfpvhrrkkqbppxfpdr.supabase.co
+      - key: SUPABASE_ANON_KEY
+        value: sb_publishable_2AYCvf_Grb3xtw9D7Cumcg_YQFKKt8u
+      - key: SUPABASE_SERVICE_ROLE_KEY
+        sync: false             # paste in dashboard
+      - key: PORT
+        value: "3000"
+
+  # --------------------------------------------------------------------------
+  # WORKER — OCR pipeline + statement match runner + scheduled jobs
+  # --------------------------------------------------------------------------
+  - type: worker
+    name: expensehub-v1-worker
+    runtime: node
+    plan: starter               # Render does not permit free-tier workers
+    region: oregon
+    branch: main
+    rootDir: .
+    buildCommand: npm install && npm run render:build:worker
+    startCommand: npm run start:worker
+    autoDeploy: true
+    envVars:
+      - key: NODE_VERSION
+        value: 20.11.0
+      - key: NPM_CONFIG_PRODUCTION
+        value: "false"
+      - key: SUPABASE_URL
+        value: https://uhyfpvhrrkkqbppxfpdr.supabase.co
+      - key: SUPABASE_ANON_KEY
+        value: sb_publishable_2AYCvf_Grb3xtw9D7Cumcg_YQFKKt8u
+      - key: SUPABASE_SERVICE_ROLE_KEY
+        sync: false
+      - key: SUPABASE_DB_URL
+        sync: false             # used by worker's pg LISTEN for ocr_pending / match_pending
+      # OCR providers — leave blank; worker falls back to deterministic stub.
+      # When you wire real Document AI / Bedrock, add these as secrets.
+      - key: GOOGLE_APPLICATION_CREDENTIALS
+        value: ""
+      - key: DOCUMENT_AI_PROJECT_ID
+        value: ""
+      - key: DOCUMENT_AI_LOCATION
+        value: us
+      - key: DOCUMENT_AI_PROCESSOR_ID
+        value: ""
+      - key: ANTHROPIC_BEDROCK_MODEL_ID
+        value: anthropic.claude-3-5-sonnet-20241022-v2:0
