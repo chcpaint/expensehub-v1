@@ -14,37 +14,26 @@ Live and configured:
 - All 4 storage buckets created with RLS (`receipts`, `statements`, `exports`, `logos`)
 - Seeded the pilot tenant — Northridge Construction (slug `northridge`) — with AccountEdge-style dashed account codes, 6 tax codes, 11 categories, 7 vendors, 2 projects, 2 approval rules, 1 policy rule, AccountEdge export profile
 
-### GitHub repo — `Easeaiworks/expensehub-v1` (Private)
-- Empty repo created at <https://github.com/Easeaiworks/expensehub-v1>
-- Visibility: Private ✓
+### GitHub repo — `chcpaint/expensehub-v1`
+- Repo at <https://github.com/chcpaint/expensehub-v1>
+- **Code is already pushed** — 86 files on the `main` branch (Claude pushed on May 20)
+- Note: the repo was created as **Public** by default. Flip it to Private in repo Settings → General → Danger Zone → Change repository visibility if you want it private.
+- The original `Easeaiworks/expensehub-v1` was created earlier as a placeholder when only the Easeaiworks account was visible. It's empty and can be deleted from <https://github.com/Easeaiworks/expensehub-v1/settings> → Danger Zone.
 
 ---
 
 ## What YOU need to do next (15 minutes)
 
-### 1. Push the code to GitHub (5 minutes)
+### 1. Pull the code to your Mac (1 minute)
 
-The full codebase lives in your Cowork outputs folder. Open Terminal on your Mac and run:
-
-```bash
-cd "/Users/adamberube/Library/Application Support/Claude/local-agent-mode-sessions/0dd19cd1-1735-4f31-a283-0bf98f03d5b4/eed91424-0770-49b9-83eb-6f840816b308/local_c41c20f5-caaa-4969-94d3-705d09bc49ad/outputs/v1-accountedge-pilot"
-
-git init
-git add .
-git commit -m "feat: V1 (AccountEdge pilot) — schema, RLS, edge functions, mobile, web, worker"
-git branch -M main
-git remote add origin https://github.com/Easeaiworks/expensehub-v1.git
-git push -u origin main
-```
-
-If git asks for credentials, use a [GitHub Personal Access Token](https://github.com/settings/tokens?type=beta) with `repo` scope (recommended) or your username + a token as password. Don't use your account password — GitHub no longer accepts that.
-
-You probably want to move the project out of the deep `Library/Application Support` path:
+The code is already on GitHub. Clone it to your dev folder:
 
 ```bash
-cp -R "/Users/.../v1-accountedge-pilot" ~/dev/expensehub-v1
-cd ~/dev/expensehub-v1 && git init && ...    # then push from there
+git clone https://github.com/chcpaint/expensehub-v1.git ~/dev/expensehub-v1
+cd ~/dev/expensehub-v1
 ```
+
+(Use a Personal Access Token if prompted for password — your account password no longer works.)
 
 ### 2. Create the first admin user (3 minutes)
 
