@@ -1,0 +1,11 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --tenant: #1F3A5F;
+  --tenant-soft: #e8eef5;
+  color-scheme: light;
+}
+
+body { background: #f5f6fa; color: #1a1f2e; }

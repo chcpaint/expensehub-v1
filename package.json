@@ -1,0 +1,32 @@
+{
+  "name": "expensehub-v1",
+  "private": true,
+  "version": "0.1.0",
+  "description": "ExpenseHub V1 — AccountEdge pilot edition",
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "scripts": {
+    "dev:web": "npm run dev --workspace=@expensehub/web",
+    "dev:mobile": "npm run dev --workspace=@expensehub/mobile",
+    "dev:worker": "npm run dev --workspace=@expensehub/worker",
+    "build:web": "npm run build --workspace=@expensehub/web",
+    "build:shared": "npm run build --workspace=@expensehub/shared",
+    "build:reconciliation": "npm run build --workspace=@expensehub/reconciliation",
+    "test": "npm run test --workspaces --if-present",
+    "test:reconciliation": "npm run test --workspace=@expensehub/reconciliation",
+    "supabase:start": "npx supabase start",
+    "supabase:reset": "npx supabase db reset",
+    "supabase:functions:serve": "npx supabase functions serve",
+    "lint": "echo 'Linting not yet configured; add eslint per app'"
+  },
+  "devDependencies": {
+    "supabase": "^1.200.0",
+    "typescript": "^5.4.0"
+  },
+  "engines": {
+    "node": ">=20.0.0",
+    "npm": ">=10.0.0"
+  }
+}

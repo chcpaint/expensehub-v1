@@ -1,0 +1,29 @@
+# Dependencies
+node_modules/
+.expo/
+dist/
+build/
+.next/
+.turbo/
+
+# Env
+.env
+.env.local
+.env.*.local
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# Logs
+*.log
+npm-debug.log*
+
+# Supabase
+.branches/
+.temp/

@@ -1,0 +1,41 @@
+{
+  "expo": {
+    "name": "ExpenseHub",
+    "slug": "expensehub",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "scheme": "expensehub",
+    "userInterfaceStyle": "automatic",
+    "newArchEnabled": true,
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#1F3A5F"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "io.expensehub.app",
+      "infoPlist": {
+        "NSCameraUsageDescription": "ExpenseHub uses the camera to capture receipts.",
+        "NSPhotoLibraryUsageDescription": "ExpenseHub uses your photos to attach receipt images to expenses.",
+        "NSFaceIDUsageDescription": "Face ID is used to confirm sensitive actions such as approving expenses."
+      }
+    },
+    "android": {
+      "package": "io.expensehub.app",
+      "permissions": ["CAMERA", "READ_MEDIA_IMAGES", "USE_BIOMETRIC", "USE_FINGERPRINT"]
+    },
+    "plugins": [
+      "expo-camera",
+      "expo-image-picker",
+      "expo-document-picker",
+      "expo-notifications",
+      "expo-local-authentication",
+      ["expo-secure-store", { "faceIDPermission": "Authenticate to access ExpenseHub" }]
+    ],
+    "extra": {
+      "supabaseUrl": "http://localhost:54321",
+      "supabaseAnonKey": "REPLACE_WITH_EXPO_PUBLIC_SUPABASE_ANON_KEY"
+    }
+  }
+}
